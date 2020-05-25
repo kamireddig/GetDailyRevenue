@@ -1,6 +1,4 @@
-import org.apache.parquet.format.IntType
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 
 object WordCount {
   def wordCount(sc : SparkSession): Unit = {
