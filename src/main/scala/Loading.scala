@@ -9,57 +9,63 @@ import org.apache.spark.sql.SparkSession
 object Loading {
   def departments(sc: SparkSession): DataFrame = {
     var departmentsDF = sc.read.format("jdbc").
-      option("url", "jdbc:mysql://localhost:3306/retail_db").
+      option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "departments").
       option("user", "root").
       option("password", "Summerof69!").
       load()
-    departmentsDF
+
+    departmentsDF     //Return keyword not mandatory in Scala as Scala is a Functional Programming language
   }
   def customers(sc: SparkSession): DataFrame = {
     var customersDF = sc.read.format("jdbc").
-      option("url", "jdbc:mysql://localhost:3306/retail_db").
+      option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "customers").
       option("user", "root").
       option("password", "Summerof69!").
       load()
+
     customersDF
   }
   def order(sc: SparkSession) : DataFrame = {
     var orderDF = sc.read.format("jdbc").
-      option("url", "jdbc:mysql://localhost:3306/retail_db").
+      option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "orders").
       option("user", "root").
       option("password", "Summerof69!").
 //      load().write.parquet("/data/out")   //Can be written in a specific file format. Parquet file format in this case.
       load()  //We are loading it in default manner
+
     orderDF
   }
   def categories(sc: SparkSession): DataFrame = {
     var categoriesDF = sc.read.format("jdbc").
-      option("url", "jdbc:mysql://localhost:3306/retail_db").
+      option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "categories").
       option("user", "root").
       option("password", "Summerof69!").
       load()
+
     categoriesDF
   }
   def products(sc: SparkSession): DataFrame = {
     var productsDF = sc.read.format("jdbc").
-      option("url", "jdbc:mysql://localhost:3306/retail_db").
+      option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "orderItems").
       option("user", "root").
       option("password", "Summerof69!").
       load()
+
     productsDF
   }
   def orderItems(sc: SparkSession): DataFrame = {
       var orderItemsDF = sc.read.format("jdbc").
-        option("url", "jdbc:mysql://localhost:3306/retail_db").
+        option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
         option("dbtable", "orderItems").
         option("user", "root").
         option("password", "Summerof69!").
         load()
+
     orderItemsDF
   }
 }
