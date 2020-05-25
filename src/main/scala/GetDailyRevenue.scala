@@ -21,7 +21,8 @@ object GetDailyRevenue {
     var categoriesDF = Loading.categories(sc)
     var productsDF = Loading.products(sc)
     var orderItemsDF = Loading.orderItems(sc)
+//    departmentsDF.show()
 
-    departmentsDF.show()
+    var wordCountDF = WordCount.wordCount(sc)
   }
 }
