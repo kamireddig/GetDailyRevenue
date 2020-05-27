@@ -1,7 +1,5 @@
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.SparkSession
-import org.apache.spark.{SparkConf,SparkContext}
+import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 
 /*This Scala Object loads data from MySQL into spark Dataframes through JDBC connectivity
 * JDBC connection dependency is added in build.sbt
@@ -10,7 +8,7 @@ import org.apache.spark.{SparkConf,SparkContext}
 */
 object Loading {
   def departments(sc: SparkSession): DataFrame = {
-    var departmentsDF = sc.read.format("jdbc").
+    val departmentsDF = sc.read.format("jdbc").
       option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "departments").
       option("user", "root").
@@ -19,8 +17,13 @@ object Loading {
 
     departmentsDF     //Return keyword not mandatory in Scala as Scala is a Functional Programming language
   }
+  //Creating RDD from above Dataframe using .rdd method
+  def departmentRDD(sc : SparkSession): RDD[Row] = {
+    val deptRDD = departments(sc).rdd
+    deptRDD
+  }
   def customers(sc: SparkSession): DataFrame = {
-    var customersDF = sc.read.format("jdbc").
+    val customersDF = sc.read.format("jdbc").
       option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "customers").
       option("user", "root").
@@ -29,8 +32,12 @@ object Loading {
 
     customersDF
   }
+  def customersRDD(sc : SparkSession): RDD[Row] = {
+    val custRDD = customers(sc).rdd
+    custRDD
+  }
   def order(sc: SparkSession) : DataFrame = {
-    var orderDF = sc.read.format("jdbc").
+    val orderDF = sc.read.format("jdbc").
       option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "orders").
       option("user", "root").
@@ -40,8 +47,12 @@ object Loading {
 
     orderDF
   }
+  def orderRDD(sc : SparkSession): RDD[Row] = {
+    val ordRDD = order(sc).rdd
+    ordRDD
+  }
   def categories(sc: SparkSession): DataFrame = {
-    var categoriesDF = sc.read.format("jdbc").
+    val categoriesDF = sc.read.format("jdbc").
       option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "categories").
       option("user", "root").
@@ -50,8 +61,12 @@ object Loading {
 
     categoriesDF
   }
+  def categoriesRDD(sc : SparkSession): RDD[Row] = {
+    val categRDD = order(sc).rdd
+    categRDD
+  }
   def products(sc: SparkSession): DataFrame = {
-    var productsDF = sc.read.format("jdbc").
+    val productsDF = sc.read.format("jdbc").
       option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "orderItems").
       option("user", "root").
@@ -60,8 +75,12 @@ object Loading {
 
     productsDF
   }
+  def productsRDD(sc : SparkSession): RDD[Row] = {
+    val prdRDD = products(sc).rdd
+    prdRDD
+  }
   def orderItems(sc: SparkSession): DataFrame = {
-    var orderItemsDF = sc.read.format("jdbc").
+    val orderItemsDF = sc.read.format("jdbc").
       option("url", "jdbc:mysql://localhost:3306/retail_db?autoReconnect=true&useSSL=false").
       option("dbtable", "orderItems").
       option("user", "root").
@@ -69,5 +88,9 @@ object Loading {
       load()
 
     orderItemsDF
+  }
+  def orderItemsRDD(sc : SparkSession): RDD[Row] = {
+    val ordItRDD = orderItems(sc).rdd
+    ordItRDD
   }
 }

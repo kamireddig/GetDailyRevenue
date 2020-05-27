@@ -1,14 +1,13 @@
-import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{Row, SparkSession}
 import org.helper.Helper._
-import spire.syntax.order
+import org.apache.spark.sql.functions.{col, udf}
 
 object GetDailyRevenue {
   def main(args: Array[String]): Unit = {
     suppressLogs(List("org", "akka"))     //removes log info in console
 
     //Creating a SparkSession
-    var sc = SparkSession.builder()
+    val sc = SparkSession.builder()
       .appName("Get Daily Revenue") //Name of the application. Appears in UI and log data.
       .master("local")       //set master as yarn. yarn will manage the resources. You can also set it as local (Default) when running locally.
       .config("spark.ui.port",12345)       //sets the port to 12345 to check from UI through this port. Default is 4040.
@@ -27,30 +26,22 @@ object GetDailyRevenue {
     val orderItemsDF = Loading.orderItems(sc)
 //    departmentsDF.show()
 
-    /* Cannot create RDD from external Databases. Can only create from external datasets like text files, parquet files, avro files, etc.,
+    /* We Cannot create RDD from external Databases. Can only create from external datasets like text files, parquet files, avro files, etc.,
      * from existing RDDs
      * and by using parallelize method
      */
 
     //Creating RDD's from the above Dataferames using .rdd method
-    val departmentsRDD = departmentsDF.rdd
-    val customersRDD = customersDF.rdd
-    val orderRDD = orderDF.rdd
-    val categoriesRDD = categoriesDF.rdd
-    val productsRDD = productsDF.rdd
-    val orderItemsRDD = orderItemsDF.rdd
+    val deptRDD = Loading.departmentRDD(sc)
+    val custRDD = Loading.customersRDD(sc)
+    val ordRDD = Loading.orderRDD(sc)
+    val categRDD = Loading.categoriesRDD(sc)
+    val prdRDD = Loading.productsRDD(sc)
+    val ordItRDD = Loading.orderItemsRDD(sc)
 
 //    val wordCountDF = WordCount.wordCount(sc)
 
-    //Dataframe Filter Condition to filter Completed orders
-//    orderDF.filter("order_status == 'CLOSED'").show()
-//    orderDF.filter("order_status == 'COMPLETE' or order_status == 'CLOSED' and order_date.toString.contains('2013-07')").show()
-//      " && order_date.contains('2013-09')").show()
-
-//    val completeOrders = orderRDD.filter(order => order(3)=="COMPLETE")
-    val cond = orderRDD.filter(order => {
-      order(3) == "COMPLETE" || order(3) == "CLOSED" && order(1).toString.contains("2013-09")
-    })
-    cond.take(10).foreach(println)
+    val filterM : Unit = WordCount.filterMe(sc)
+    val joinMetaData : Unit = WordCount.joinMe(sc)
   }
 }

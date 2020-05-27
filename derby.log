@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Tue May 26 15:48:07 CDT 2020:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0172-52be-126f-0000189d6028 
+Tue May 26 19:05:23 CDT 2020:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0172-5372-a990-0000133b5e20 
 on database directory /Users/pratikgaurav/Scala/GetDailyRevenue/metastore_db with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/Users/pratikgaurav/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
