@@ -39,9 +39,8 @@ object GetDailyRevenue {
     val prdRDD = Loading.productsRDD(sc)
     val ordItRDD = Loading.orderItemsRDD(sc)
 
-//    val wordCountDF = WordCount.wordCount(sc)
-
-    val filterM : Unit = WordCount.filterMe(sc)
-    val joinMetaData : Unit = WordCount.joinMe(sc)
+//    val wordCountDF = FunctionMe.wordCount(sc)
+    val filterM : Unit = FunctionMe.filterMe(sc)
+    val joinMetaData : Unit = FunctionMe.joinMe(sc)
   }
 }

@@ -1,7 +1,7 @@
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.col
 
-object WordCount {
+object FunctionMe {
   def wordCount(sc : SparkSession): Unit = {
     val l: List[String] = List("Hello","How are you doing","Let us perform word count","As part of the word count program","we will see how many time each word repeat")
     val l_rdd = sc.sparkContext.parallelize(l)
@@ -12,6 +12,7 @@ object WordCount {
     val wordCount = l_flatMap.map(word => (word,1)).countByKey
     wordCount.foreach(println)
   }
+
   def filterMe(sc : SparkSession): Unit = {
     val oDF = Loading.order(sc)
     val oRDD = Loading.orderRDD(sc)
@@ -32,6 +33,7 @@ object WordCount {
     val filterCntRDD = orderFilterCondRDD.count
     //    println("\nCount of orders from RDD: " + filterCntRDD)
   }
+
   def joinMe(sc : SparkSession): Unit = {
     val oRDD = Loading.orderRDD(sc)
     val oIRDD = Loading.orderItemsRDD(sc)
@@ -54,6 +56,6 @@ object WordCount {
     ordersLeftOuterJoin.take(5).foreach(println)
     //Filters to only those which has no values in the orderItems table
     val ordersLeftOuterJoinFilter = ordersLeftOuterJoin.filter(order => order._2._2 == None)
-    println("Orders Left Outer Joined on OrderItems: " + ordersLeftOuterJoinFilter.count() + "\n")
+    println("Orders Left Outer Joined on OrderItems: " + ordersLeftOuterJoinFilter.take(5).foreach(println) + "\n")
   }
 }
