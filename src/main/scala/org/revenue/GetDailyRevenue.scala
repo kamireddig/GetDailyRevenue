@@ -1,6 +1,7 @@
-import org.apache.spark.sql.{Row, SparkSession}
-import org.helper.Helper._
-import org.apache.spark.sql.functions.{col, udf}
+package org.revenue
+
+import org.apache.spark.sql.SparkSession
+import org.helper.Helper.suppressLogs
 
 object GetDailyRevenue {
   def main(args: Array[String]): Unit = {
